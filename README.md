@@ -1,4 +1,5 @@
 **SkillSwap Project**
+
 Developed a multi-page web application to enable peer-to-peer skill exchange and collaboration. The platform allows users to create profiles, explore available skills, connect with others, and communicate through an integrated messaging system. Designed with a modular front-end architecture, the project ensures smooth navigation and an organized user experience.
 
 **Key Features:**
