@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Skill Swap</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <span class="logo-text">Skill Swap</span>
+            </div>
+            <div class="dashboard-menu">
+                <a href="dashboard.html" class="dash-btn">Overview</a>
+                <a href="skill-matching.html" class="dash-btn">Find Matches</a>
+                <a href="profile.html" class="dash-btn active">Profile</a>
+                <a href="feedback.html" class="dash-btn">Feedback</a>
+                <a href="messages.html" class="dash-btn">Messages</a>
+                <button class="dash-btn logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <h1>My Profile</h1>
+            
+            <!-- Profile Overview -->
+            <div class="profile-overview">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="profileImage" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1" alt="Profile Picture">
+                        <button class="change-avatar-btn" onclick="changeAvatar()">📷</button>
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Loading...</h2>
+                        <p id="profileEmail">Loading...</p>
+                        <p class="member-since">Member since <span id="memberSince">Loading...</span></p>
+                        <div class="profile-stats">
+                            <span class="stat-item">
+                                <strong id="profileActiveMatches">0</strong> Active Matches
+                            </span>
+                            <span class="stat-item">
+                                <strong id="profileCompletedSwaps">0</strong> Completed Swaps
+                            </span>
+                            <span class="stat-item">
+                                <strong id="profileRating">4.5</strong> ⭐ Rating
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Profile Form -->
+            <div class="profile-sections">
+                <!-- Personal Information -->
+                <div class="profile-section">
+                    <h3>Personal Information</h3>
+                    <form id="personalInfoForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio" name="bio" placeholder="Tell others about yourself..." rows="4"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" name="location" placeholder="City, Country">
+                            </div>
+                            <div class="form-group">
+                                <label for="timezone">Timezone</label>
+                                <select id="timezone" name="timezone">
+                                    <option value="UTC-8">Pacific Time (UTC-8)</option>
+                                    <option value="UTC-5">Eastern Time (UTC-5)</option>
+                                    <option value="UTC+0">GMT (UTC+0)</option>
+                                    <option value="UTC+1">Central European Time (UTC+1)</option>
+                                    <option value="UTC+8">China Standard Time (UTC+8)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Update Personal Info</button>
+                    </form>
+                </div>
+
+                <!-- Skills to Teach -->
+                <div class="profile-section">
+                    <h3>Skills I Can Teach</h3>
+                    <form id="teachingSkillsForm" class="profile-form">
+                        <div id="teachingSkillsList" class="skills-list">
+                            <!-- Skills will be populated here -->
+                        </div>
+                        <div class="add-skill-section">
+                            <input type="text" id="newTeachingSkill" placeholder="Add a skill you can teach...">
+                            <select id="teachingSkillLevel">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="expert">Expert</option>
+                            </select>
+                            <button type="button" class="btn-secondary" onclick="addTeachingSkill()">Add Skill</button>
+                        </div>
+                        <button type="submit" class="btn-primary">Update Teaching Skills</button>
+                    </form>
+                </div>
+
+                <!-- Skills to Learn -->
+                <div class="profile-section">
+                    <h3>Skills I Want to Learn</h3>
+                    <form id="learningSkillsForm" class="profile-form">
+                        <div id="learningSkillsList" class="skills-list">
+                            <!-- Skills will be populated here -->
+                        </div>
+                        <div class="add-skill-section">
+                            <input type="text" id="newLearningSkill" placeholder="Add a skill you want to learn...">
+                            <select id="learningSkillPriority">
+                                <option value="low">Low Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="high">High Priority</option>
+                            </select>
+                            <button type="button" class="btn-secondary" onclick="addLearningSkill()">Add Skill</button>
+                        </div>
+                        <button type="submit" class="btn-primary">Update Learning Goals</button>
+                    </form>
+                </div>
+
+                <!-- Availability -->
+                <div class="profile-section">
+                    <h3>Availability</h3>
+                    <form id="availabilityForm" class="profile-form">
+                        <div class="availability-grid">
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="monday"> Monday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="monday-start" value="09:00">
+                                    <span>to</span>
+                                    <input type="time" name="monday-end" value="17:00">
+                                </div>
+                            </div>
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="tuesday"> Tuesday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="tuesday-start" value="09:00">
+                                    <span>to</span>
+                                    <input type="time" name="tuesday-end" value="17:00">
+                                </div>
+                            </div>
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="wednesday"> Wednesday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="wednesday-start" value="09:00">
+                                    <span>to</span>
+                                    <input type="time" name="wednesday-end" value="17:00">
+                                </div>
+                            </div>
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="thursday"> Thursday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="thursday-start" value="09:00">
+                                    <span>to</span>
+                                    <input type="time" name="thursday-end" value="17:00">
+                                </div>
+                            </div>
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="friday"> Friday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="friday-start" value="09:00">
+                                    <span>to</span>
+                                    <input type="time" name="friday-end" value="17:00">
+                                </div>
+                            </div>
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="saturday"> Saturday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="saturday-start" value="10:00">
+                                    <span>to</span>
+                                    <input type="time" name="saturday-end" value="16:00">
+                                </div>
+                            </div>
+                            <div class="day-availability">
+                                <label>
+                                    <input type="checkbox" name="availability" value="sunday"> Sunday
+                                </label>
+                                <div class="time-slots">
+                                    <input type="time" name="sunday-start" value="10:00">
+                                    <span>to</span>
+                                    <input type="time" name="sunday-end" value="16:00">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Update Availability</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Skill Swap</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <span class="logo-text">Skill Swap</span>
+            </div>
+            <div class="dashboard-menu">
+                <a href="dashboard.html" class="dash-btn active">Overview</a>
+                <a href="skill-matching.html" class="dash-btn">Find Matches</a>
+                <a href="profile.html" class="dash-btn">Profile</a>
+                <a href="feedback.html" class="dash-btn">Feedback</a>
+                <a href="messages.html" class="dash-btn">Messages</a>
+                <button class="dash-btn logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            <div class="welcome-card">
+                <h1 id="welcomeMessage">Welcome back!</h1>
+                <p>Ready to swap some skills today?</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Your Skills</h3>
+                    <div id="userSkillsToTeach" class="skill-tags">
+                        <span class="skill-tag">Loading...</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Learning Goals</h3>
+                    <div id="userSkillsToLearn" class="skill-tags">
+                        <span class="skill-tag">Loading...</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Matches</h3>
+                    <div class="big-number" id="activeMatches">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed Swaps</h3>
+                    <div class="big-number" id="completedSwaps">0</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-section">
+                <h2>Recent Activity</h2>
+                <div id="recentActivity" class="activity-list">
+                    <!-- Activity will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="actions-grid">
+                    <a href="skill-matching.html" class="action-card">
+                        <div class="action-icon">🔍</div>
+                        <h3>Find New Matches</h3>
+                        <p>Discover skill partners</p>
+                    </a>
+                    <a href="profile.html" class="action-card">
+                        <div class="action-icon">👤</div>
+                        <h3>Update Profile</h3>
+                        <p>Edit your skills and preferences</p>
+                    </a>
+                    <a href="feedback.html" class="action-card">
+                        <div class="action-icon">💬</div>
+                        <h3>Leave Feedback</h3>
+                        <p>Rate your recent exchanges</p>
+                    </a>
+                    <a href="messages.html" class="action-card">
+                        <div class="action-icon">📱</div>
+                        <h3>Secure Messages</h3>
+                        <p>Chat with your skill partners</p>
+                    </a>
+                    <div class="action-card" onclick="scheduleSession()">
+                        <div class="action-icon">📅</div>
+                        <h3>Schedule Session</h3>
+                        <p>Book your next learning session</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

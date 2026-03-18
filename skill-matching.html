@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Matches - Skill Swap</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Inline critical styles for immediate loading */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-main {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 3rem;
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <span class="logo-text">Skill Swap</span>
+            </div>
+            <div class="dashboard-menu">
+                <a href="dashboard.html" class="dash-btn">Overview</a>
+                <a href="skill-matching.html" class="dash-btn active">Find Matches</a>
+                <a href="profile.html" class="dash-btn">Profile</a>
+                <a href="feedback.html" class="dash-btn">Feedback</a>
+                <a href="messages.html" class="dash-btn">Messages</a>
+                <button class="dash-btn logout" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Skill Matching Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <h1>Find Your Perfect Match</h1>
+
+            <!-- Search and Filters -->
+            <div class="matching-controls">
+                <div class="search-section">
+                    <input type="text" id="skillFilter" placeholder="Search for a skill..." class="search-input">
+                    <button class="btn-primary" onclick="performSearch()">Find Matches</button>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Filters</h3>
+                    <div class="filter-options">
+                        <select id="skillCategory" class="filter-select" onchange="performSearch()">
+                            <option value="">All Categories</option>
+                            <option value="technology">Technology</option>
+                            <option value="arts">Arts & Creative</option>
+                            <option value="languages">Languages</option>
+                            <option value="music">Music</option>
+                            <option value="business">Business</option>
+                            <option value="fitness">Fitness & Health</option>
+                        </select>
+
+                        <select id="experienceLevel" class="filter-select" onchange="performSearch()">
+                            <option value="">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="expert">Expert</option>
+                        </select>
+
+                        <select id="availability" class="filter-select" onchange="performSearch()">
+                            <option value="">Any Time</option>
+                            <option value="weekdays">Weekdays</option>
+                            <option value="weekends">Weekends</option>
+                            <option value="evenings">Evenings</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Results -->
+            <div class="matches-section">
+                <div class="matches-header">
+                    <h2>Recommended Matches</h2>
+                    <span id="matchCount" class="match-count">Loading matches...</span>
+                </div>
+
+                <div id="matchResults" class="matches-grid">
+                    <div class="loading-message">
+                        <p>Loading your perfect matches...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Matches -->
+            <div class="saved-matches-section">
+                <h2>Saved Matches</h2>
+                <div id="savedMatches" class="matches-grid">
+                    <div class="match-card">
+                        <div class="match-header">
+                            <h3>No saved matches yet</h3>
+                        </div>
+                        <p>Save interesting matches by clicking the heart icon to easily find them later!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Embedded JavaScript for immediate functionality
+        console.log('Skill Matching page loading...');
+
+        // Global variables
+        let savedMatches = JSON.parse(localStorage.getItem('savedMatches')) || [];
+        let currentUser = null;
+        let allMatches = [];
+
+        // Sample match data
+        const sampleMatches = [
+            {
+                id: '2',
+                name: 'Sarah Chen',
+                skillsToTeach: ['Photography', 'Photoshop', 'Digital Art'],
+                skillsToLearn: ['Web Development', 'Marketing', 'Cooking'],
+                level: 'Advanced',
+                availability: 'Weekends',
+                rating: 4.9,
+                location: 'New York, NY',
+                bio: 'Professional photographer and digital artist with 8+ years of experience',
+                avatar: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+            },
+            {
+                id: '3',
+                name: 'Mike Rodriguez',
+                skillsToTeach: ['Guitar', 'Music Theory', 'Songwriting'],
+                skillsToLearn: ['Programming', 'Video Editing', 'French'],
+                level: 'Expert',
+                availability: 'Evenings',
+                rating: 4.7,
+                location: 'Austin, TX',
+                bio: 'Musician and guitar instructor with 10+ years experience',
+                avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+            },
+            {
+                id: '4',
+                name: 'Emma Wilson',
+                skillsToTeach: ['Spanish', 'French', 'Translation'],
+                skillsToLearn: ['Graphic Design', 'Photography', 'Cooking'],
+                level: 'Intermediate',
+                availability: 'Flexible',
+                rating: 4.8,
+                location: 'Los Angeles, CA',
+                bio: 'Language teacher and translator, native Spanish speaker',
+                avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+            },
+            {
+                id: '5',
+                name: 'David Kim',
+                skillsToTeach: ['Cooking', 'Korean Cuisine', 'Food Photography'],
+                skillsToLearn: ['Web Development', 'Digital Marketing', 'Guitar'],
+                level: 'Advanced',
+                availability: 'Weekends',
+                rating: 4.6,
+                location: 'Seattle, WA',
+                bio: 'Professional chef and food photographer',
+                avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+            },
+            {
+                id: '6',
+                name: 'Lisa Zhang',
+                skillsToTeach: ['Yoga', 'Meditation', 'Wellness Coaching'],
+                skillsToLearn: ['Photography', 'Social Media Marketing', 'Graphic Design'],
+                level: 'Advanced',
+                availability: 'Mornings',
+                rating: 4.9,
+                location: 'San Francisco, CA',
+                bio: 'Certified yoga instructor and wellness coach',
+                avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+            }
+        ];
+
+        // Initialize page
+        function initializePage() {
+            console.log('Initializing skill matching page...');
+
+            // Try to get current user
+            try {
+                const savedUser = localStorage.getItem('currentUser');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    console.log('Current user:', currentUser.fullName);
+                } else {
+                    // Create demo user for local testing
+                    currentUser = {
+                        id: 'demo_user',
+                        fullName: 'Demo User',
+                        skillsToTeach: ['Web Development', 'JavaScript', 'React'],
+                        skillsToLearn: ['Photography', 'Guitar', 'Spanish']
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+            } catch (error) {
+                console.error('Error loading user:', error);
+                currentUser = {
+                    id: 'demo_user',
+                    fullName: 'Demo User',
+                    skillsToTeach: ['Web Development', 'JavaScript', 'React'],
+                    skillsToLearn: ['Photography', 'Guitar', 'Spanish']
+                };
+            }
+
+            // Load matches
+            allMatches = [...sampleMatches];
+            displayMatches(allMatches);
+            loadSavedMatches();
+
+            // Set up search input listener
+            const searchInput = document.getElementById('skillFilter');
+            if (searchInput) {
+                searchInput.addEventListener('input', debounce(performSearch, 300));
+            }
+        }
+
+        // Display matches
+        function displayMatches(matches) {
+            const matchResults = document.getElementById('matchResults');
+            const matchCount = document.getElementById('matchCount');
+
+            if (!matchResults) return;
+
+            if (matchCount) {
+                matchCount.textContent = `${matches.length} matches found`;
+            }
+
+            if (matches.length === 0) {
+                matchResults.innerHTML = `
+                    <div class="match-card">
+                        <h3>No matches found</h3>
+                        <p>Try adjusting your search or filters, or check back later for new members!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            matchResults.innerHTML = matches.map(user => {
+                const isSaved = savedMatches.includes(user.id);
+
+                return `
+                    <div class="match-card ${isSaved ? 'saved' : ''}">
+                        <div class="match-header">
+                            <h3>${user.name}</h3>
+                            <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSaveMatch('${user.id}')">
+                                ${isSaved ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                        <div class="match-skills">
+                            <p><strong>Can teach:</strong> ${user.skillsToTeach.join(', ')}</p>
+                            <p><strong>Wants to learn:</strong> ${user.skillsToLearn.join(', ')}</p>
+                        </div>
+                        <div class="match-details">
+                            <span class="match-level">${user.level}</span>
+                            <span class="match-availability">${user.availability}</span>
+                            <span class="match-rating">⭐ ${user.rating}</span>
+                        </div>
+                        <div class="match-reason">
+                            <p><strong>Match reason:</strong> ${getMatchReason(user)}</p>
+                        </div>
+                        <div class="match-actions">
+                            <button class="btn-primary" onclick="connectWithUser('${user.id}')">Connect</button>
+                            <button class="btn-secondary" onclick="viewProfile('${user.id}')">View Profile</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Get match reason
+        function getMatchReason(user) {
+            if (!currentUser) return 'Great potential match';
+
+            const reasons = [];
+
+            // Check what current user can teach that this user wants to learn
+            currentUser.skillsToTeach.forEach(skill => {
+                user.skillsToLearn.forEach(wantedSkill => {
+                    if (skill.toLowerCase().includes(wantedSkill.toLowerCase()) ||
+                        wantedSkill.toLowerCase().includes(skill.toLowerCase())) {
+                        reasons.push(`You can teach ${skill}`);
+                    }
+                });
+            });
+
+            // Check what this user can teach that current user wants to learn
+            user.skillsToTeach.forEach(skill => {
+                currentUser.skillsToLearn.forEach(wantedSkill => {
+                    if (skill.toLowerCase().includes(wantedSkill.toLowerCase()) ||
+                        wantedSkill.toLowerCase().includes(skill.toLowerCase())) {
+                        reasons.push(`They can teach ${skill}`);
+                    }
+                });
+            });
+
+            return reasons.length > 0 ? reasons.slice(0, 2).join(', ') : 'Complementary skills and interests';
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('skillFilter')?.value.toLowerCase() || '';
+            const category = document.getElementById('skillCategory')?.value || '';
+            const level = document.getElementById('experienceLevel')?.value || '';
+            const availability = document.getElementById('availability')?.value || '';
+
+            let filteredMatches = [...allMatches];
+
+            // Apply search filter
+            if (searchTerm) {
+                filteredMatches = filteredMatches.filter(user =>
+                    user.name.toLowerCase().includes(searchTerm) ||
+                    user.skillsToTeach.some(skill => skill.toLowerCase().includes(searchTerm)) ||
+                    user.skillsToLearn.some(skill => skill.toLowerCase().includes(searchTerm)) ||
+                    user.bio.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Apply category filter
+            if (category) {
+                filteredMatches = filteredMatches.filter(user =>
+                    user.skillsToTeach.some(skill => skill.toLowerCase().includes(category)) ||
+                    user.skillsToLearn.some(skill => skill.toLowerCase().includes(category))
+                );
+            }
+
+            // Apply level filter
+            if (level) {
+                filteredMatches = filteredMatches.filter(user =>
+                    user.level.toLowerCase() === level.toLowerCase()
+                );
+            }
+
+            // Apply availability filter
+            if (availability) {
+                filteredMatches = filteredMatches.filter(user =>
+                    user.availability.toLowerCase().includes(availability.toLowerCase())
+                );
+            }
+
+            displayMatches(filteredMatches);
+        }
+
+        // Toggle save match
+        function toggleSaveMatch(userId) {
+            const index = savedMatches.indexOf(userId);
+
+            if (index > -1) {
+                savedMatches.splice(index, 1);
+                showNotification('Match removed from saved list', 'info');
+            } else {
+                savedMatches.push(userId);
+                showNotification('Match saved successfully!', 'success');
+            }
+
+            localStorage.setItem('savedMatches', JSON.stringify(savedMatches));
+
+            // Refresh displays
+            performSearch();
+            loadSavedMatches();
+        }
+
+        // Load saved matches
+        function loadSavedMatches() {
+            const savedMatchesContainer = document.getElementById('savedMatches');
+            if (!savedMatchesContainer) return;
+
+            if (savedMatches.length === 0) {
+                savedMatchesContainer.innerHTML = `
+                    <div class="match-card">
+                        <h3>No saved matches</h3>
+                        <p>Save interesting matches by clicking the heart icon to easily find them later!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const savedUsers = allMatches.filter(user => savedMatches.includes(user.id));
+
+            savedMatchesContainer.innerHTML = savedUsers.map(user => `
+                <div class="match-card saved">
+                    <div class="match-header">
+                        <h3>${user.name}</h3>
+                        <button class="save-btn saved" onclick="toggleSaveMatch('${user.id}')">❤️</button>
+                    </div>
+                    <div class="match-skills">
+                        <p><strong>Can teach:</strong> ${user.skillsToTeach.join(', ')}</p>
+                        <p><strong>Wants to learn:</strong> ${user.skillsToLearn.join(', ')}</p>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-level">${user.level}</span>
+                        <span class="match-availability">${user.availability}</span>
+                        <span class="match-rating">⭐ ${user.rating}</span>
+                    </div>
+                    <div class="match-reason">
+                        <p><strong>Match reason:</strong> ${getMatchReason(user)}</p>
+                    </div>
+                    <div class="match-actions">
+                        <button class="btn-primary" onclick="connectWithUser('${user.id}')">Connect</button>
+                        <button class="btn-secondary" onclick="viewProfile('${user.id}')">View Profile</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Connect with user
+        function connectWithUser(userId) {
+            const user = allMatches.find(u => u.id === userId);
+            if (user) {
+                showNotification(`Connection request sent to ${user.name}! Start your skill exchange journey.`, 'success');
+
+                // Update active matches if current user exists
+                if (currentUser) {
+                    currentUser.activeMatches = (currentUser.activeMatches || 0) + 1;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+            }
+        }
+
+        // View profile
+        function viewProfile(userId) {
+            const user = allMatches.find(u => u.id === userId);
+            if (user) {
+                const profileInfo = `
+Name: ${user.name}
+Location: ${user.location}
+Bio: ${user.bio}
+Skills to teach: ${user.skillsToTeach.join(', ')}
+Skills to learn: ${user.skillsToLearn.join(', ')}
+Experience level: ${user.level}
+Availability: ${user.availability}
+Rating: ${user.rating}/5
+                `.trim();
+
+                alert(profileInfo);
+            }
+        }
+
+        // Logout function
+        function handleLogout() {
+            localStorage.clear();
+            showNotification('Logged out successfully', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#f44336' : type === 'success' ? '#4caf50' : '#00bcd4'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                z-index: 3000;
+                font-family: 'Inter', sans-serif;
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+
+            // Add slide-in animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            document.body.appendChild(notification);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        // Also initialize immediately in case DOMContentLoaded already fired
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializePage);
+        } else {
+            initializePage();
+        }
+
+        console.log('Skill matching page script loaded successfully');
+    </script>
+
+    <!-- Load external scripts if available (fallback) -->
+    <script src="js/auth.js" onerror="console.log('Auth module not found, using embedded functionality')"></script>
+    <script src="js/skill-matching.js"
+        onerror="console.log('Skill matching module not found, using embedded functionality')"></script>
+</body>
+
+</html>

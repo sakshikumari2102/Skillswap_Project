@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Swap - Where Skills Pay for Your Next Passion</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <h1 class="logo-text">Skill Swap</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="features.html" class="nav-link">Features</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <button class="btn-primary" onclick="showRegistration()">Get Started</button>
+            </div>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page Hero -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Where Skills Pay for Your
+                <span class="gradient-text">Next Passion</span>
+            </h1>
+            <p class="hero-subtitle">
+                Exchange your expertise with others. Teach what you know, learn what you love.
+                No money required - just pure skill sharing.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary large" onclick="showRegistration()">
+                    Start Swapping
+                    <span class="btn-arrow">→</span>
+                </button>
+                <a href="about.html" class="btn-secondary large">
+                    Learn More
+                </a>
+                <button class="btn-secondary large" onclick="demoLogin()"
+                    style="background: var(--warning-color); border-color: var(--warning-color); color: white;">
+                    🚀 Demo Login
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Skills Available</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Active Swappers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2000+</span>
+                    <span class="stat-label">Successful Swaps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Login Info -->
+    <section class="section bg-dark">
+        <div class="container">
+            <div class="demo-info">
+                <h2 class="section-title">Try It Now!</h2>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                    Want to explore the platform? Use our demo login to see all features in action.
+                </p>
+                <div style="text-align: center;">
+                    <button class="btn-primary large" onclick="demoLogin()">
+                        🚀 Demo Login (Alex Johnson)
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <small style="color: var(--text-muted);">
+                        Or create your own account with the "Get Started" button above
+                    </small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Features Preview -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Skill Swap?</h2>
+            <div class="features-preview">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Smart Matching</h3>
+                    <p>AI-powered algorithm finds your perfect skill exchange partner</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Diverse Skills</h3>
+                    <p>From coding to cooking, art to accounting - every skill has value</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community Driven</h3>
+                    <p>Join a supportive community of lifelong learners and teachers</p>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="features.html" class="btn-primary">View All Features</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideRegistration()">&times;</span>
+            <h2>Join Skill Swap</h2>
+            <form id="registrationForm" class="form">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="skillsToTeach">Skills You Can Teach</label>
+                    <textarea id="skillsToTeach" name="skillsToTeach"
+                        placeholder="e.g., Web Development, Guitar, Cooking..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="skillsToLearn">Skills You Want to Learn</label>
+                    <textarea id="skillsToLearn" name="skillsToLearn"
+                        placeholder="e.g., Photography, Spanish, Marketing..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Create Account</button>
+            </form>
+            <p class="form-footer">
+                Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideLogin()">&times;</span>
+            <h2>Welcome Back</h2>
+            <form id="loginForm" class="form">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sign In</button>
+            </form>
+            <p class="form-footer">
+                Don't have an account? <a href="#" onclick="showRegistration()">Sign Up</a>
+            </p>
+            <div
+                style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                <small style="color: var(--text-muted);">Demo credentials:</small><br>
+                <small style="color: var(--text-secondary);">Email: alex@example.com | Password: password123</small>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+
+</html>

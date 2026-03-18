@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Skill Swap</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <span class="logo-text">Skill Swap</span>
+            </div>
+            <div class="dashboard-menu">
+                <a href="dashboard.html" class="dash-btn">Overview</a>
+                <a href="skill-matching.html" class="dash-btn">Find Matches</a>
+                <a href="profile.html" class="dash-btn">Profile</a>
+                <a href="feedback.html" class="dash-btn active">Feedback</a>
+                <a href="messages.html" class="dash-btn">Messages</a>
+                <button class="dash-btn logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Feedback Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <h1>Feedback & Reviews</h1>
+            
+            <!-- Feedback Tabs -->
+            <div class="feedback-tabs">
+                <button class="tab-btn active" onclick="showFeedbackTab('give')">Give Feedback</button>
+                <button class="tab-btn" onclick="showFeedbackTab('received')">Received Reviews</button>
+                <button class="tab-btn" onclick="showFeedbackTab('given')">Given Reviews</button>
+            </div>
+
+            <!-- Give Feedback Section -->
+            <div id="giveFeedbackTab" class="feedback-tab-content">
+                <div class="feedback-section">
+                    <h2>Share Your Experience</h2>
+                    <form id="feedbackForm" class="feedback-form">
+                        <div class="form-group">
+                            <label for="feedbackPartner">Select Partner</label>
+                            <select id="feedbackPartner" name="feedbackPartner" required>
+                                <option value="">Choose a skill exchange partner...</option>
+                                <option value="sarah-chen">Sarah Chen - Photography</option>
+                                <option value="mike-rodriguez">Mike Rodriguez - Guitar</option>
+                                <option value="emma-wilson">Emma Wilson - Spanish</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exchangeType">Exchange Type</label>
+                            <select id="exchangeType" name="exchangeType" required>
+                                <option value="">Select exchange type...</option>
+                                <option value="teaching">I taught them</option>
+                                <option value="learning">They taught me</option>
+                                <option value="mutual">Mutual exchange</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Overall Rating</label>
+                            <div class="rating-stars">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                            </div>
+                            <input type="hidden" id="rating" name="rating" value="0">
+                        </div>
+
+                        <div class="rating-categories">
+                            <div class="rating-category">
+                                <label>Communication</label>
+                                <div class="rating-stars category-stars" data-category="communication">
+                                    <span class="star" data-rating="1">★</span>
+                                    <span class="star" data-rating="2">★</span>
+                                    <span class="star" data-rating="3">★</span>
+                                    <span class="star" data-rating="4">★</span>
+                                    <span class="star" data-rating="5">★</span>
+                                </div>
+                            </div>
+                            <div class="rating-category">
+                                <label>Knowledge</label>
+                                <div class="rating-stars category-stars" data-category="knowledge">
+                                    <span class="star" data-rating="1">★</span>
+                                    <span class="star" data-rating="2">★</span>
+                                    <span class="star" data-rating="3">★</span>
+                                    <span class="star" data-rating="4">★</span>
+                                    <span class="star" data-rating="5">★</span>
+                                </div>
+                            </div>
+                            <div class="rating-category">
+                                <label>Reliability</label>
+                                <div class="rating-stars category-stars" data-category="reliability">
+                                    <span class="star" data-rating="1">★</span>
+                                    <span class="star" data-rating="2">★</span>
+                                    <span class="star" data-rating="3">★</span>
+                                    <span class="star" data-rating="4">★</span>
+                                    <span class="star" data-rating="5">★</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedbackText">Your Review</label>
+                            <textarea id="feedbackText" name="feedbackText" placeholder="Share your experience with this skill exchange..." rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="recommendPartner" name="recommendPartner">
+                                I would recommend this partner to others
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Received Reviews Section -->
+            <div id="receivedFeedbackTab" class="feedback-tab-content hidden">
+                <div class="feedback-section">
+                    <h2>Reviews About You</h2>
+                    <div class="feedback-summary">
+                        <div class="summary-stats">
+                            <div class="summary-item">
+                                <span class="summary-number">4.8</span>
+                                <span class="summary-label">Average Rating</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-number">23</span>
+                                <span class="summary-label">Total Reviews</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-number">96%</span>
+                                <span class="summary-label">Recommend Rate</span>
+                            </div>
+                        </div>
+                        <div class="rating-breakdown">
+                            <div class="rating-bar">
+                                <span>5 ★</span>
+                                <div class="bar"><div class="fill" style="width: 78%"></div></div>
+                                <span>18</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>4 ★</span>
+                                <div class="bar"><div class="fill" style="width: 17%"></div></div>
+                                <span>4</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>3 ★</span>
+                                <div class="bar"><div class="fill" style="width: 4%"></div></div>
+                                <span>1</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>2 ★</span>
+                                <div class="bar"><div class="fill" style="width: 0%"></div></div>
+                                <span>0</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>1 ★</span>
+                                <div class="bar"><div class="fill" style="width: 0%"></div></div>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="receivedFeedbackList" class="feedback-list">
+                        <!-- Received feedback will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Given Reviews Section -->
+            <div id="givenFeedbackTab" class="feedback-tab-content hidden">
+                <div class="feedback-section">
+                    <h2>Reviews You've Given</h2>
+                    <div id="givenFeedbackList" class="feedback-list">
+                        <!-- Given feedback will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/feedback.js"></script>
+</body>
+</html>

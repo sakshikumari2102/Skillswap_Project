@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Skill Swap</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <span class="logo-text">Skill Swap</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="features.html" class="nav-link">Features</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <button class="btn-primary" onclick="showRegistration()">Get Started</button>
+            </div>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">About Skill Swap</h1>
+            <p class="page-subtitle">Revolutionizing how people learn and share knowledge</p>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Share Your Skills</h3>
+                    <p>Tell us what you're good at and what you'd love to learn. Create a comprehensive profile showcasing your expertise and learning goals.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>Find Your Match</h3>
+                    <p>Our smart matching system connects you with perfect skill partners based on complementary skills and learning objectives.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Start Learning</h3>
+                    <p>Exchange knowledge, grow together, and build lasting connections through structured skill-sharing sessions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section bg-dark">
+        <div class="container">
+            <div class="mission-content">
+                <div class="mission-text">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="large-text">
+                        We believe that everyone has valuable skills to share and something new to learn. 
+                        Skill Swap breaks down traditional barriers to education by creating a community 
+                        where knowledge flows freely between passionate individuals.
+                    </p>
+                    <p>
+                        Our platform empowers people to monetize their expertise not through money, 
+                        but through the exchange of knowledge itself. This creates a sustainable 
+                        ecosystem where learning never stops and everyone benefits.
+                    </p>
+                </div>
+                <div class="mission-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10,000+</span>
+                        <span class="stat-label">Skills Exchanged</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Active Members</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Satisfaction Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🌟</div>
+                    <h3>Excellence</h3>
+                    <p>We strive for the highest quality in every skill exchange, ensuring meaningful learning experiences.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Community</h3>
+                    <p>Building strong connections between learners and teachers creates lasting relationships beyond skill sharing.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>Growth</h3>
+                    <p>Continuous learning and improvement drive both personal development and platform evolution.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3>Trust</h3>
+                    <p>Safe, secure, and verified interactions ensure a trustworthy environment for all members.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Skill Journey?</h2>
+                <p>Join thousands of learners and teachers in our vibrant community</p>
+                <button class="btn-primary large" onclick="showRegistration()">
+                    Join Skill Swap Today
+                    <span class="btn-arrow">→</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideRegistration()">&times;</span>
+            <h2>Join Skill Swap</h2>
+            <form id="registrationForm" class="form">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="skillsToTeach">Skills You Can Teach</label>
+                    <textarea id="skillsToTeach" name="skillsToTeach" placeholder="e.g., Web Development, Guitar, Cooking..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="skillsToLearn">Skills You Want to Learn</label>
+                    <textarea id="skillsToLearn" name="skillsToLearn" placeholder="e.g., Photography, Spanish, Marketing..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Create Account</button>
+            </form>
+            <p class="form-footer">
+                Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideLogin()">&times;</span>
+            <h2>Welcome Back</h2>
+            <form id="loginForm" class="form">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sign In</button>
+            </form>
+            <p class="form-footer">
+                Don't have an account? <a href="#" onclick="showRegistration()">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>

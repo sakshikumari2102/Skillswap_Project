@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Skill Swap</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="ChatGPT Image Jul 9, 2025, 12_29_15 AM.png" alt="Skill Swap Logo" class="logo-img">
+                <span class="logo-text">Skill Swap</span>
+            </div>
+            <div class="dashboard-menu">
+                <a href="dashboard.html" class="dash-btn">Overview</a>
+                <a href="skill-matching.html" class="dash-btn">Find Matches</a>
+                <a href="profile.html" class="dash-btn">Profile</a>
+                <a href="feedback.html" class="dash-btn">Feedback</a>
+                <a href="messages.html" class="dash-btn active">Messages</a>
+                <button class="dash-btn logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <div class="messages-container">
+                <!-- Conversations List -->
+                <div class="conversations-panel">
+                    <div class="conversations-header">
+                        <h2>Messages</h2>
+                        <button class="btn-primary" onclick="startNewConversation()">+ New Chat</button>
+                    </div>
+                    
+                    <div class="search-conversations">
+                        <input type="text" placeholder="Search conversations..." class="search-input">
+                    </div>
+                    
+                    <div id="conversationsList" class="conversations-list">
+                        <!-- Conversations will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Chat Area -->
+                <div class="chat-panel">
+                    <div id="chatHeader" class="chat-header">
+                        <div class="chat-user-info">
+                            <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1" alt="User" class="chat-avatar">
+                            <div class="chat-user-details">
+                                <h3 id="chatUserName">Select a conversation</h3>
+                                <span id="chatUserStatus" class="user-status">Click on a conversation to start chatting</span>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="action-btn" onclick="startVoiceCall()" title="Voice Call">
+                                📞
+                            </button>
+                            <button class="action-btn" onclick="startVideoCall()" title="Video Call">
+                                📹
+                            </button>
+                            <button class="action-btn" onclick="shareScreen()" title="Share Screen">
+                                🖥️
+                            </button>
+                            <button class="action-btn" onclick="scheduleSession()" title="Schedule Session">
+                                📅
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="messagesArea" class="messages-area">
+                        <div class="welcome-message">
+                            <h3>Welcome to Secure Messaging</h3>
+                            <p>🔒 End-to-end encrypted conversations</p>
+                            <p>📞 Voice and video calling</p>
+                            <p>🖥️ Screen sharing for learning</p>
+                            <p>Select a conversation to start chatting!</p>
+                        </div>
+                    </div>
+
+                    <div id="messageInput" class="message-input-area">
+                        <div class="input-container">
+                            <button class="attachment-btn" onclick="attachFile()" title="Attach File">📎</button>
+                            <input type="text" id="messageText" placeholder="Type your message..." class="message-input">
+                            <button class="emoji-btn" onclick="showEmojiPicker()" title="Add Emoji">😊</button>
+                            <button class="send-btn" onclick="sendMessage()" title="Send Message">➤</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Call Modal -->
+    <div id="videoCallModal" class="modal video-call-modal">
+        <div class="video-call-content">
+            <div class="video-call-header">
+                <h3 id="callUserName">Video Call with Sarah Chen</h3>
+                <div class="call-timer">00:00</div>
+            </div>
+            
+            <div class="video-streams">
+                <div class="remote-video">
+                    <video id="remoteVideo" autoplay></video>
+                    <div class="video-placeholder">
+                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=1" alt="Remote User">
+                        <p>Connecting...</p>
+                    </div>
+                </div>
+                
+                <div class="local-video">
+                    <video id="localVideo" autoplay muted></video>
+                    <div class="video-placeholder">
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1" alt="You">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="call-controls">
+                <button class="control-btn mute-btn" onclick="toggleMute()" title="Mute/Unmute">
+                    🎤
+                </button>
+                <button class="control-btn video-btn" onclick="toggleVideo()" title="Turn Video On/Off">
+                    📹
+                </button>
+                <button class="control-btn screen-btn" onclick="toggleScreenShare()" title="Share Screen">
+                    🖥️
+                </button>
+                <button class="control-btn chat-btn" onclick="toggleChatInCall()" title="Chat">
+                    💬
+                </button>
+                <button class="control-btn end-call-btn" onclick="endCall()" title="End Call">
+                    📞
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Call Modal -->
+    <div id="voiceCallModal" class="modal voice-call-modal">
+        <div class="voice-call-content">
+            <div class="voice-call-avatar">
+                <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=1" alt="Caller">
+            </div>
+            <h3 id="voiceCallUserName">Sarah Chen</h3>
+            <p id="voiceCallStatus">Connecting...</p>
+            <div class="voice-call-timer">00:00</div>
+            
+            <div class="voice-call-controls">
+                <button class="voice-control-btn mute-btn" onclick="toggleMute()" title="Mute/Unmute">
+                    🎤
+                </button>
+                <button class="voice-control-btn speaker-btn" onclick="toggleSpeaker()" title="Speaker">
+                    🔊
+                </button>
+                <button class="voice-control-btn end-call-btn" onclick="endCall()" title="End Call">
+                    📞
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Sharing Modal -->
+    <div id="fileShareModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFileShare()">&times;</span>
+            <h2>Share Files</h2>
+            <div class="file-share-area">
+                <div class="file-drop-zone" onclick="selectFile()">
+                    <div class="drop-icon">📁</div>
+                    <p>Click to select files or drag and drop</p>
+                    <small>Supports: Images, Documents, Audio, Video (Max 50MB)</small>
+                </div>
+                <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
+                <div id="selectedFiles" class="selected-files"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/messages.js"></script>
+</body>
+</html>
